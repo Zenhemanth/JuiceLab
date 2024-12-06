@@ -9,10 +9,12 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import asyncio 
+import asyncio
+from config import Config
+
 
 app = Flask(__name__)
-app.config.from_object('config.Config')
+app.config.from_object(Config)
 
 # SQLAlchemy configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://user:password@localhost/db_name'
