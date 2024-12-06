@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .btn-order {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 5px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .btn-order:hover {
+        background-color: #218838;
+    }
+
+    .nutrition-label {
+        max-width: 500px;
+        margin: 20px auto;
+        border: 2px solid black;
+        padding: 15px;
+        font-family: Arial, sans-serif;
+        background-color: #fff;
+    }
+
+    .nutrition-label h1 {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nutrition-header, .nutrition-body, .nutrition-footer {
+        margin-bottom: 10px;
+    }
+
+    .nutrition-body p, .nutrition-footer p {
+        margin: 5px 0;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    ul li {
+        margin: 5px 0;
+    }
+</style>
+
+<h2>Nutrition Facts</h2>
+
+<div class="nutrition-label">
+    <div class="nutrition-header">
+        <h1>Nutrition Facts</h1>
+        <p>Serving Size: 1 cup</p>
+        <p>Servings Per Container: 1</p>
+    </div>
+    <hr>
+    <div class="nutrition-body">
+        <p><strong>Calories</strong> {{ total_calories }}</p>
+        <hr>
+        <p><strong>% Daily Value*</strong></p>
+        <p>Total Fat: {{ total_fat }}g</p>
+        <p>Cholesterol: {{ total_cholesterol }}mg</p>
+        <p>Sodium: {{ total_sodium }}mg</p>
+        <p>Total Carbohydrate: {{ total_carbohydrates }}g</p>
+        <p>Dietary Fiber: {{ total_fiber }}g</p>
+        <p>Total Sugars: {{ total_sugars }}g</p>
+        <p>Protein: {{ total_protein }}g</p>
+        <hr>
+        <h4>Ingredients Breakdown:</h4>
+        <ul>
+            {% for item, calories in nutritional_facts.items() %}
+            <li>{{ item }}: {{ calories }} cal</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <hr>
+    <div class="nutrition-footer">
+        <p>* Percent Daily Values are based on a 2,000 calorie diet.</p>
+    </div>
+</div>
+
+<!-- Styled Button -->
+<div style="text-align: center;">
+    <a href="{{ url_for('order') }}" class="btn-order">Place Another Order</a>
+</div>
+{% endblock %}

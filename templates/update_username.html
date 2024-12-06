@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Update Username</h1>
+<form method="POST">
+    <label for="username">New Username:</label>
+    <input type="text" name="username" required>
+    <button type="submit">Update</button>
+</form>
+{% endblock %}

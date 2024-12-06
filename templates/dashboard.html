@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #343232;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        color: white; /* Apply white text color */
+    }
+    h1 {
+        text-align: center;
+        color: white; /* Explicitly set to white */
+    }
+
+    /* Profile Section */
+    .profile {
+        margin-bottom: 20px;
+        color: white; /* White text for profile section */
+    }
+    .profile p {
+        margin: 5px 0;
+    }
+    .profile a {
+        color: #1e90ff; /* Light blue links for better contrast */
+    }
+    .profile a:hover {
+        color: #63b8ff; /* Lighter blue on hover */
+    }
+
+    /* Table (Order History) */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    table th, table td {
+        padding: 10px;
+        border: 1px solid #413f3f;
+        text-align: left;
+        color: white; /* White text for table content */
+    }
+    table th {
+        background-color: #232121;
+    }
+
+    /* Navigation Buttons */
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+    .nav-button {
+        display: inline-block;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        color: rgb(241, 233, 233);
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .nav-dashboard {
+        background-color: #007bff;
+    }
+    .nav-dashboard:hover {
+        background-color: #0056b3;
+    }
+    .nav-home {
+        background-color: #28a745;
+    }
+    .nav-home:hover {
+        background-color: #218838;
+    }
+    .nav-logout {
+        background-color: #dc3545;
+    }
+    .nav-logout:hover {
+        background-color: #a71d2a;
+    }
+</style>
+
+<!-- Navigation Buttons -->
+<div class="nav-buttons">
+    <a href="{{ url_for('order') }}" class="nav-button nav-home">Home</a>
+</div>
+
+<div class="container">
+    <h1>{{ user.username }}'s Dashboard</h1>
+
+    <!-- Profile Section -->
+    <div class="profile">
+        <h2>Profile</h2>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p>
+            <a href="{{ url_for('update_username') }}">Update Username</a>
+            <a href="{{ url_for('update_email') }}">Update Email</a>
+            <a href="{{ url_for('update_password') }}">Update Password</a>
+        </p>
+    </div>
+
+    <!-- Order History Section -->
+    <h2>Order History</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Juice</th>
+                <th>Fruits</th>
+                <th>Cup size</th>
+                <th>Fruits</th>
+                <th>Toppings</th>
+                <th>Total Calories</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order[0] }}</td>
+                <td>{{ order[1] }}</td>
+                <td>{{ order[2] }}</td>
+                <td>{{ order[3] }}</td>
+                <td>{{ order[4] }}</td>
+                <td>{{ order[5] }}</td>
+                <td>{{ order[6] }}</td>
+                <td>{{ order[7] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

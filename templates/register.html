@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        color: black;
+    }
+
+    h2, p {
+        text-align: center;
+        font-family: Arial, sans-serif;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .btn-submit:hover {
+        background-color: #218838;
+    }
+
+    .instructions {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="container">
+    <!-- About the Application -->
+    <h2>Welcome to Juice Lab</h2>
+    <p>At Juice Lab, we believe in providing fresh, healthy, and customizable juices to fit your taste and lifestyle. Create your favorite blends, choose your toppings, and enjoy a nutritional boost every day!</p>
+    
+    <!-- Instructions -->
+    <div class="instructions">
+        <h4>Instructions:</h4>
+        <ul>
+            <li>Register an account to start creating your custom juices.</li>
+            <li>Once registered, log in to explore our juice selection.</li>
+            <li>Place orders, track your history, and enjoy personalized nutrition facts for every drink!</li>
+        </ul>
+    </div>
+
+    <!-- Registration Form -->
+    <h2>Register</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            <label for="username">{{ form.username.label }}</label>
+            {{ form.username(id="username") }}
+        </div>
+
+        <div class="form-group">
+            <label for="email">{{ form.email.label }}</label>
+            {{ form.email(id="email") }}
+        </div>
+
+        <div class="form-group">
+            <label for="password">{{ form.password.label }}</label>
+            {{ form.password(id="password") }}
+        </div>
+
+        <div class="form-group">
+            <label for="confirm_password">{{ form.confirm_password.label }}</label>
+            {{ form.confirm_password(id="confirm_password") }}
+        </div>
+
+        <button type="submit" class="btn-submit">{{ form.submit.label }}</button>
+    </form>
+</div>
+{% endblock %}
