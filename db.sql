@@ -1,4 +1,7 @@
--- Ensure users table exists
+-- Use the Railway-provided database
+USE railway;
+
+-- Create `users` table if it doesn't exist
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -6,20 +9,20 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(200) NOT NULL
 );
 
--- Ensure orders table exists
+-- Create `orders` table if it doesn't exist
 CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     juice_name VARCHAR(100),
+    cup_size VARCHAR(10),
     fruits TEXT,
     toppings TEXT,
-    cup_size VARCHAR(10),
     total_calories INT,
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Ensure juices table exists
+-- Create `juices` table if it doesn't exist
 CREATE TABLE IF NOT EXISTS juices (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
@@ -33,7 +36,7 @@ CREATE TABLE IF NOT EXISTS juices (
     protein FLOAT DEFAULT 0
 );
 
--- Ensure fruits table exists
+-- Create `fruits` table if it doesn't exist
 CREATE TABLE IF NOT EXISTS fruits (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
@@ -47,7 +50,7 @@ CREATE TABLE IF NOT EXISTS fruits (
     protein FLOAT DEFAULT 0
 );
 
--- Ensure toppings table exists
+-- Create `toppings` table if it doesn't exist
 CREATE TABLE IF NOT EXISTS toppings (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
@@ -61,7 +64,7 @@ CREATE TABLE IF NOT EXISTS toppings (
     protein FLOAT DEFAULT 0
 );
 
--- Insert data into juices table
+-- Insert data into `juices` table using `INSERT IGNORE`
 INSERT IGNORE INTO juices (name, base_calories, fat, cholesterol, sodium, carbohydrates, fiber, sugars, protein)
 VALUES
     ('Apple Juice', 50, 0, 0, 5, 14, 0, 12, 0.5),
@@ -75,7 +78,7 @@ VALUES
     ('Lemon Juice', 30, 0, 0, 2, 8, 0.3, 6, 0.4),
     ('Kiwi Juice', 45, 0, 0, 3, 11, 0.4, 10, 0.6);
 
--- Insert data into fruits table
+-- Insert data into `fruits` table using `INSERT IGNORE`
 INSERT IGNORE INTO fruits (name, calories_per_gram, fat, cholesterol, sodium, carbohydrates, fiber, sugars, protein)
 VALUES
     ('Apple', 0.52, 0.1, 0, 1, 14, 2.4, 10, 0.3),
@@ -89,7 +92,7 @@ VALUES
     ('Kiwi', 0.61, 0.2, 0, 2, 15, 2.1, 13, 0.9),
     ('Orange', 0.47, 0.1, 0, 1, 12, 2.0, 9, 0.7);
 
--- Insert data into toppings table
+-- Insert data into `toppings` table using `INSERT IGNORE`
 INSERT IGNORE INTO toppings (name, calories_per_gram, fat, cholesterol, sodium, carbohydrates, fiber, sugars, protein)
 VALUES
     ('Whipped Cream', 2, 0.2, 1, 5, 0.3, 0, 0.3, 0.1),

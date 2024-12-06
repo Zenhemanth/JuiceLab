@@ -24,4 +24,4 @@ RUN apt-get update && apt-get install -y default-mysql-client
 EXPOSE 8000
 
 # Start the application with database initialization
-CMD ["bash", "-c", "mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB < /app/db.sql || true && gunicorn app:app --bind 0.0.0.0:8000"]
+CMD ["bash", "-c", "mysql -h $MYSQLHOST -u $MYSQLUSER -p$MYSQLPASSWORD $MYSQL_DATABASE < /app/db.sql || true && gunicorn app:app --bind 0.0.0.0:8000"]
