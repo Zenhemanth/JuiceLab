@@ -17,8 +17,11 @@ RUN pip install --upgrade pip
 # Install Python dependencies with error logging for debugging
 RUN pip install --no-cache-dir -r requirements.txt || { echo "Error during pip install"; exit 1; }
 
+# Install MySQL client for database initialization
+RUN apt-get update && apt-get install -y default-mysql-client
+
 # Expose the application port
 EXPOSE 8000
 
-# Start the application using Gunicorn
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000"]
+# Start the application with database initialization
+CMD ["bash", "-c", "mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB < /app/db.sql || true && gunicorn app:app --bind 0.0.0.0:8000"]
