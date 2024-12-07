@@ -29,11 +29,12 @@
 <nav style="margin-bottom: 20px;">
     {% if current_user.is_authenticated %}
         <a href="{{ url_for('dashboard') }}" class="nav-button nav-dashboard">Dashboard</a>
+        {% if current_user.is_admin %}
+                <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+            {% endif %}
         <a href="{{ url_for('logout') }}" class="nav-button nav-logout">Logout</a>
     {% endif %}
 </nav>
-
-
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -42,7 +43,6 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-
     <!-- Main Content -->
     {% block content %}{% endblock %}
 </body>

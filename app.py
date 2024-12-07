@@ -34,10 +34,11 @@ login_manager.login_view = 'login'
 
 
 class User(UserMixin):
-    def __init__(self, id, username, email):
+    def __init__(self, id, username, email, is_admin=False):
         self.id = id
         self.username = username
         self.email = email
+        self.is_admin = is_admin
 
 
 @login_manager.user_loader
@@ -46,7 +47,7 @@ def load_user(user_id):
     cur.execute("SELECT * FROM users WHERE id=%s", [user_id])
     user = cur.fetchone()
     if user:
-        return User(id=user[0], username=user[1], email=user[2])
+        return User(id=user[0], username=user[1], email=user[2], is_admin=user[4])
     return None
 
 
@@ -287,6 +288,40 @@ def logout():
     logout_user()
     flash('Logged out successfully!')
     return redirect(url_for('login'))
+
+@app.route('/admin_dashboard')
+@login_required
+def admin_dashboard():
+    if not current_user.is_admin:
+        flash("Unauthorized access", "danger")
+        return redirect(url_for('dashboard'))
+
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM orders")
+    orders = cur.fetchall()
+    cur.close()
+
+    print("Orders fetched for admin:", orders)  # Debugging
+    return render_template('admin_dashboard.html', orders=orders)
+
+@app.route('/delete_order/<int:order_id>', methods=['POST', 'GET'])
+@login_required
+def delete_order(order_id):
+    if not current_user.is_admin:
+        flash("Unauthorized access", "danger")
+        return redirect(url_for('admin_dashboard'))
+
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM orders WHERE id = %s", [order_id])
+        mysql.connection.commit()
+        cur.close()
+        flash("Order deleted successfully.", "success")
+    except Exception as e:
+        flash("An error occurred while deleting the order.", "danger")
+        print(f"Error: {e}")
+
+    return redirect(url_for('admin_dashboard'))
 
 
 if __name__ == '__main__':
